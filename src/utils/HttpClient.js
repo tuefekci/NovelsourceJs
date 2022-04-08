@@ -8,6 +8,8 @@ const sha1 = require('locutus/php/strings/sha1');
 const delay = require('delay');
 const Humanoid = require("humanoid-js");
 const rand = require('locutus/php/math/rand');
+const { fstat } = require('fs');
+const fs = require('fs');
 
 function isCloudflareResponse(response) {
 
@@ -41,12 +43,9 @@ class HttpClient {
 		}
 
 		// check if browser or node etc.
-
-		let cachePath = "http-cache";
-		if(__dirname) {
-			cachePath = __dirname + "/../../tmp/http-cache";
-		}
-
+		let localDir = require('path').dirname(require.main.filename);
+		let cachePath = localDir + "/tmp/http-cache";
+		fs.mkdirSync(cachePath, { recursive: true });
 		this.cache = ttl(level(cachePath), {defaultTTL: 60 * 60 * 24 * 1000});
 
 	}
