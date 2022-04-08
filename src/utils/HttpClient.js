@@ -42,11 +42,33 @@ class HttpClient {
 			}
 		}
 
-
+		// check if browser or node etc.
+		let localDir = require('path').dirname(require.main.filename);
+		let cachePath = localDir + "/tmp/http-cache";
+		fs.mkdirSync(cachePath, { recursive: true });
+		this.cache = ttl(level(cachePath), {defaultTTL: 60 * 60 * 24 * 1000});
 
 	}
 
+	async isCached(url, args = {}) {
+		let key = sha1(url);
+
+		try {
+			let cachedResult = await this.cache.get(cacheKey);
+			return cachedResult;
+		} catch(e) {
+		}
+	}
+
 	async request(method, url, args = {}) {
+
+		let cacheKey = sha1(url);
+
+		try {
+			let cachedResult = await this.cache.get(cacheKey);
+			return cachedResult;
+		} catch(e) {
+		}
 
 		try {
 
@@ -56,6 +78,7 @@ class HttpClient {
 			await delay(rand(100, 250));
 			
 			if(response.statusCode === 200) {
+				this.cache.put(cacheKey, response.body);
 				return Promise.resolve(response.body);
 			} else {
 				if(args.retry < 5) {
