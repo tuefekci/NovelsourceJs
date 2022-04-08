@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@mozilla/readability": "^0.4.2",
-    "axios": "^0.26.1",
     "cheerio": "^1.0.0-rc.10",
     "delay": "^5.0.0",
     "humanoid-js": "^1.0.1",

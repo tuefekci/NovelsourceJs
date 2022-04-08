@@ -1,6 +1,4 @@
 const empty = require('locutus/php/var/empty');
-
-const axios = require('axios').default;
 const level = require('level');
 const ttl = require('level-ttl');
 const serialize = require('locutus/php/var/serialize');
