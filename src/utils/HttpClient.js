@@ -8,20 +8,6 @@ const { fstat } = require('fs');
 const fs = require('fs');
 const os = require('os');
 
-function isCloudflareResponse(response) {
-
-	if(typeof response.headers['cf-ray'] !== 'undefined' && typeof response.headers['server'] !== 'undefined' && response.headers['server'] === 'cloudflare') {
-		response.$ = cheerio.load(response.data);
-
-		//console.log(response.data);
-
-		if(response.$('#challenge-form input[name=vc]').length > 0)
-			return true;
-	}
-
-	return false;
-}
-
 class HttpClient {
 
 	headers = {
