@@ -10,6 +10,7 @@ const Chapter = require("../../models/Chapter");
 class ReadNovelFull extends SourceNovel {
 	base_urls = ["https://readnovelfull.com/"];
 	last_updated = "2022-03-02";
+	name = "readnovelfull.com";
 
 	async novels(args = {}) {
 		return await this.search("*");

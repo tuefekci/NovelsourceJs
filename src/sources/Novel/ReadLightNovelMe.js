@@ -12,6 +12,7 @@ const sha1 = require("locutus/php/strings/sha1");
 class ReadLightNovelMe extends SourceNovel {
 	base_urls = ["https://www.readlightnovel.me/"];
 	last_updated = "2022-04-01";
+	name = "readlightnovel.me";
 
 	async novels(args = {}) {
 		try {
