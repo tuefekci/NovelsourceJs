@@ -126,18 +126,17 @@ class ReadNovelFull extends SourceNovel {
 
 		try {
 			const dom = await this.dom(url, args);
+
+			const chapter = new Chapter();
+
+			chapter.title = dom("h2 a.chr-title").first().text();
+			chapter.url = url;
+			chapter.content = this.cleanContent(dom("#chr-content").first().html());
+
+			return Promise.resolve(chapter);
 		} catch (error) {
 			return Promise.reject(error);
 		}
-
-
-		const chapter = new Chapter();
-
-		chapter.title = dom("h2 a.chr-title").first().text();
-		chapter.url = url;
-		chapter.content = this.cleanContent(dom("#chr-content").first().html());
-
-		return Promise.resolve(chapter);
 	}
 
 	async search(query, args = {}) {
