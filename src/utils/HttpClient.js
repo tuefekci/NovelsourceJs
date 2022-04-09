@@ -42,7 +42,7 @@ class HttpClient {
 		}
 
 		// check if browser or node etc.
-		let cachePath = os.tmpdir() + "/tmp/http-cache";
+		let cachePath = os.tmpdir() + "/novelsourcejs/http-cache";
 		fs.mkdirSync(cachePath, { recursive: true });
 		this.cache = ttl(level(cachePath), {defaultTTL: 60 * 60 * 24 * 1000});
 
