@@ -187,8 +187,6 @@ class ReadLightNovelMe extends SourceNovel {
 
 	async chapter(url, args = {}) {
 
-		console.log(url);
-
 		try {
 			const dom = await this.dom(url, args);
 
@@ -196,29 +194,20 @@ class ReadLightNovelMe extends SourceNovel {
 
 			chapter.title = dom(".chapter-content3 .desc").find("h1").first().text();
 			chapter.url = url;
-
 			chapter.content = "";
 
 			dom(".chapter-content3 .desc").find("p").each((i, el) => {
-
 				let content = trim(dom(el).text());
-				
 				if(!content) return;
-
 				chapter.content += "<p>"+trim(dom(el).text()) + "</p>";
 			});
 
-
+			chapter.content = this.cleanContent(chapter.content);
 
 			return Promise.resolve(chapter);
-
 		} catch (error) {
 			return Promise.reject(error);
 		}
-
-
-
-
 
 	}
 
